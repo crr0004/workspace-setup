@@ -1,0 +1,1 @@
+/home/chris/.bash_aliases
