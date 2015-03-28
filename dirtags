@@ -1,1 +1,3 @@
-/home/chris/dev/dirtags
+#!/bin/sh
+cd $1
+ctags *
