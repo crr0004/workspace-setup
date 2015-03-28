@@ -1,6 +1,8 @@
 # workspace-setup
 A place for my linux workspace files so I can always clone it into new development enviroments
+
 Good color for warm gray background: #272822
+
 ### .bash_aliases ###
 Contains aliases and extensions for bash enviroment. Place in home directory where bashrc can find it
 ### dirtags ###
