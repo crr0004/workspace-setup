@@ -1,6 +1,11 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
-let g:netrw_dirhist_1='/home/chris/dev/source/gocode'
-let g:netrw_dirhist_2='/home/chris/dev/source'
-let g:netrw_dirhist_3='/home/chris/dev/source/go1.4.2_src'
-let g:netrw_dirhist_4='/home/chris/dev/source/gocode/src/github.com/limetext/lime/frontend/qml'
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/chris/dev/projects/hugo'
+let g:netrw_dirhist_2='/home/chris/dev/projects'
+let g:netrw_dirhist_3='/home/chris/dev'
+let g:netrw_dirhist_4='/home/chris/dev/projects/hugo'
+let g:netrw_dirhist_5='/home/chris/dev'
+let g:netrw_dirhist_6='/home/chris'
+let g:netrw_dirhist_7='/home/chris/dev/source'
+let g:netrw_dirhist_8='/home'
+let g:netrw_dirhist_9='/'
