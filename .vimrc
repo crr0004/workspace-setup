@@ -8,6 +8,7 @@ Plug 'SirVer/ultisnips' " UtilSnips engine
 Plug 'honza/vim-snippets' " Code snippets
 Plug 'Valloric/YouCompleteMe'
 Plug 'crr0004/netrw' " Ensures I have latest version of netrw with my own modifications if I see fit
+Plug 'Lokaltog/vim-easymotion'
 
 call plug#end()
 nmap <F8> :TagbarToggle<CR> " Turns TagbarToggle on, check plugins for what this does
