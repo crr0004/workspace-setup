@@ -1,6 +1,9 @@
 let mapleader = ","
 " Changes the color scheme to a pleasent scheme
 colorscheme molokai 
+if has('nvim')
+	colorscheme molokai
+endif	
 call plug#begin('~/.vim/plugged')
 
 Plug 'fatih/vim-go', { 'for': 'go' } " Used for editing the golang language in vim
