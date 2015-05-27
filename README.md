@@ -3,7 +3,7 @@ A place for my linux workspace files so I can always clone it into new developme
 
 Good color for warm gray background: #272822
 
-### .bash_aliases ###
+### .bashrc ###
 Contains aliases and extensions for bash enviroment. Place in home directory where bashrc can find it
 ### dirtags ###
 Containes a small script to be called from find * -type d -exec dirtags {} where dirtags is the script location
@@ -12,3 +12,7 @@ Requires execution and write permissions - u+x from chmod
 Containes all the custom extensions for the vim enviroment. Place in home directory where vim can find it
 ### .vimrc ###
 Contains all the custom mappings, scripts and other things for vim shell enviroment
+### copyme.sh ###
+Copies all the viles to their relevant places
+### install_plugged.vim ###
+Installs the vim plugin managed plugged
