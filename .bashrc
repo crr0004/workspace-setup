@@ -12,7 +12,7 @@ fi
 #!/bin/bash
 alias ls="ls -a --color"
 alias ctagfull="ctags -R --sort=yes --extra=+q --fields=+aiS -f .tags"
-alias xclip='xclip -selection c'
+alias xclipx11='xclip -selection c'
 alias buildctagsdir="find * -type d -exec ~/dev/dirtags {} \; ; ctags -R --file-scope=yes *"
 alias dirtags="~/dev/dirtags"
 alias hugo="~/dev/projects/hugo/hugo"
