@@ -16,3 +16,10 @@ Contains all the custom mappings, scripts and other things for vim shell envirom
 Copies all the viles to their relevant places
 ### install_plugged.vim ###
 Installs the vim plugin managed plugged
+###Using print_remote.sh###
+This script relies on one parameter being entered as the .git directory of a repo.
+Then uses sed to print out the fetch url.
+###Using save_repos.sh###
+This script uses find to connect to the print_remotes script.
+This relies on one parameter being the root directory for find to search, it looks for the .git directories and passes that to print_remotes. This outputs to git_repos.txt
+TODO: Seperate out std redirection or make the file be unique for each run

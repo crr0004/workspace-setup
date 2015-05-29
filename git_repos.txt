@@ -1,0 +1,9 @@
+https://github.com/neovim/neovim.git
+git@github.com:okamstudio/godot.git
+git@github.com:kivy/kivy.git
+https://github.com/kivy/buildozer.git
+https://github.com/blueman-project/blueman.git
+git://repo.or.cz/ncmpcpp.git
+https://github.com/dvdhrm/xf86-input-xwiimote.git
+git://github.com/kivy/python-for-android
+https://github.com/dvdhrm/xwiimote.git
