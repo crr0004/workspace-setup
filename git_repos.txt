@@ -1,4 +1,6 @@
+https://github.com/ondoheer/freelancer-theme-pelican.git
 https://github.com/neovim/neovim.git
+https://github.com/oxygine/oxygine-framework.git
 git@github.com:okamstudio/godot.git
 git@github.com:kivy/kivy.git
 https://github.com/kivy/buildozer.git
