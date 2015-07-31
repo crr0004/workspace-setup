@@ -7,6 +7,7 @@ then
 	cp .vimrc $1
 	cp dirtags $1
 	cp .gitconfig $1
+	cp .tmux.conf $1
 else
 	echo "Must supply a directory to copy to. Suggest home directory of ~/"
 fi
