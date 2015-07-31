@@ -1,0 +1,12 @@
+[user]
+	name = crr0004
+	email = crr0004@gmail.com
+[core]
+	editor = vimx
+	excludesfile = /home/chris/.gitignore_global
+[push]
+	default = current
+[merge]
+	tool = vimdiff3
+[branch "*"]
+	mergeOptions = commit
