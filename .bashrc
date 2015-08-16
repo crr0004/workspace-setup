@@ -11,10 +11,9 @@ fi
 # User specific aliases and functions
 #!/bin/bash
 alias ls="ls -a --color"
-alias ctagfull="ctags -R --sort=yes --extra=+q --fields=+aiS -f .tags"
 alias xclipto='xclip -selection c'
 alias xclipfrom="xclip -selection c -o"
-alias buildctagsdir="find * -type d -exec ~/dev/dirtags {} \; ; ctags -R --file-scope=yes *"
+alias buildctagsdir="find * -type d -exec ~/dev/dirtags {} \; ; ctags -f .tags -R --file-scope=yes *"
 alias dirtags="~/dev/dirtags"
 alias hugo="~/dev/projects/hugo/hugo"
 alias delve="~/dev/source/gocode/src/github.com/derekparker/delve/cmd/dlv/dlv"
@@ -27,9 +26,12 @@ alias vim="vimx"
 alias ports="netstat -tulanp"
 alias tmuxchris="~/dev/tmux_configs/chris_tmux.sh"
 alias pd="pushd"
+alias copypath="echo cd `pwd` | xclip -selection c"
 export ANT_HOME="/home/chris/dev/source/apache-ant-1.9.4"
 export ANDROIDSDK="/home/chris/dev/source/android-sdk-linux/"
 export ANDROIDNDK="/home/chris/dev/source/android-ndk-r10e/"
+export ANDROID_HOME="/home/chris/dev/source/android-sdk-linux/"
+export ANDROID_NDK_ROOT="/home/chris/dev/source/android-ndk-r10e/"
 export ANDROIDNDKVER=r10e
 export ANDROIDAPI=15
 export JDK_HOME="/home/chris/jdk1.7.0_79"
