@@ -9,12 +9,41 @@ fi
 # export SYSTEMD_PAGER=
 
 # User specific aliases and functions
+function listDir
+{
+	find "$1" -maxdepth 1 -type d -print;
+}
+function changeDir
+{
+
+	#DIRS="$(listDir('~/dev/projects/'))"
+	DIRS="$(listDir ~/dev/source)"
+
+	echo $DIRS | awk '
+	BEGIN{
+		RS=" ";
+		lineNumber = 1;
+	}
+	{
+		print NR " " $1;
+	}'
+	echo "Choose directory to swap to: "
+	read dirNumber
+	echo $DIRS | awk -v dirNumber=$dirNumber '
+	BEGIN{
+		RS=" ";
+	}
+	{if (NR==dirNumber) {
+		print $1;
+	}
+	}'
+
+}
 #!/bin/bash
 alias ls="ls -a --color"
 alias xclipto='xclip -selection c'
 alias xclipfrom="xclip -selection c -o"
-alias buildctagsdir="find * -type d -exec ~/dev/dirtags {} \; ; ctags -f .tags -R --file-scope=yes *"
-alias dirtags="~/dev/dirtags"
+alias buildctagsdir="find * -type d -exec ~/dev/dirtags {} \; ; ctags --sort=yes -f .tags -R --file-scope=yes *"
 alias hugo="~/dev/projects/hugo/hugo"
 alias delve="~/dev/source/gocode/src/github.com/derekparker/delve/cmd/dlv/dlv"
 alias nvim="~/neovim/bin/nvim"
@@ -37,7 +66,7 @@ export ANDROIDAPI=15
 export JDK_HOME="/home/chris/jdk1.7.0_79"
 export GOPATH=~/dev/source/gocode
 export GOROOT=~/dev/source/go
-export PATH=$PATH:$GOROOT/bin:"$JDK_HOME/bin":"~/dev/source/vim/install/bin:/usr/local/cuda-7.0/bin"
+export PATH=$PATH:$GOROOT/bin:"$JDK_HOME/bin":"~/dev/source/vim/install/bin:/usr/local/cuda-7.0/bin":"~/dev/scripts/"
 export LD_LIBRARY_PATH=/usr/local/cuda-7.0/lib64:$LD_LIBRARY_PATH
 export WINEPREFX="/mnt/1TB/FED/.wine"
 export WINEARCH="wine32"
