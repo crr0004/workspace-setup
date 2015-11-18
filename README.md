@@ -10,6 +10,8 @@ Containes a small script to be called from find * -type d -exec dirtags {} where
 Requires execution and write permissions - u+x from chmod 
 ### .vim ###
 Containes all the custom extensions for the vim enviroment. Place in home directory where vim can find it
+####Color Scheme
+The colorscheme is set to molokai and can be found at: github.com/tomasr/molokai
 ### .vimrc ###
 Contains all the custom mappings, scripts and other things for vim shell enviroment
 ### copyme.sh ###
