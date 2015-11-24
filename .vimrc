@@ -7,15 +7,15 @@ if !empty(glob("~/.vim/autoload/plug.vim"))
 
 	Plug 'SirVer/ultisnips' " UtilSnips engine
 	Plug 'honza/vim-snippets' " Code snippets
-	Plug 'Shougo/neocomplete.vim'
+	Plug 'Shougo/neocomplete.vim' | Plug 'Shougo/vimproc.vim', {'do': 'make'}
 	Plug 'tmux-plugins/vim-tmux'
 	Plug 'python-rope/ropevim', {'for': 'python'}
 	Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 	Plug 'scrooloose/syntastic'
-	Plug 'eiginn/netrw' " Ensures I have latest version of netrw with my own modifications if I see fit
+	Plug 'eiginn/netrw' " Ensures I have latest version of netrw 
 	Plug 'jeetsukumaran/vim-buffergator'
 	Plug 'kien/ctrlp.vim'
-	Plug 'majutsushi/tagbar'
+	Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
 
 
 	call plug#end()
@@ -55,6 +55,7 @@ endif
 	nnoremap <C-b> :call ScrollUpPercent(33)<CR>
 	" Moves down a split window
 	nmap <Leader><Space> za
+	nmap <Leader><S-Space> zA
 	vmap <Leader><Space> zf
 	" Moves through split window
 	nmap <Leader>j <C-W>j<C-R>
@@ -84,31 +85,34 @@ endif
 	" Opens netrw sidebar on the current file
 	nmap <Leader>` :call VexToggle("")<CR>
 	" Quick write session with F2
-	map <F2> :mksession! ./.vim_session <CR> 
-	" And load session with F3
-	map <F3> :source ./.vim_session <CR>     
+	noremap <F2> :mksession! ./.vim_session
+	" And load session with F11
+	noremap <F11> :source ./.vim_session
+	" Reload tag file with F3
+	noremap <F3> :!(cd %:p:h && ctags --language-force=C++ -R -f .tags)
 	map <F4> :lgrep -e " . expand("<cword>") . " "
+	map <F5> !~/dirtags % & <CR>
 " Options
 	filetype plugin on " Turns plugin filetype detection on
 	filetype on " The command filetype plugin on turns filetype detection on, however to ensure it is turned on
+	set omnifunc=syntaxcomplete#Complete
 	au BufRead *.rs set filetype=rust
 	autocmd BufNewFile,BufRead *.md set filetype=markdown
-	autocmd BufNewFile,BufRead *.py call SetPythonOptions()
+	autocmd BufNewFile,BufRead SConstruct set filetype=python
 	set nu " Sets line numbers on, change to rnu for relative line numbers
 	set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4 " Changes tab to 4 spaces
 	set backspace=indent,eol,start " Makes backspace actually work
 	set tags=./.tags,.tags
 	"Folding with syntax highlighting
 	set foldmethod=syntax
+	set foldnestmax=1
 	"Fix external grep
 	set grepprg=grep\ -rnEI\ --exclude-dir=.git\ $*\ /dev/null
+	"Modelines
+	set modeline
+	set modelines=5
 
 " Functions
-	function! SetPythonOptions()
-		set foldmethod=indent
-		set foldnestmax=2
-		set tabstop=2 softtabstop=0 expandtab shiftwidth=2 " Changes tab to 4 spaces
-	endfunction
 
 	function! GetScrollPercent(percent)
 		let movelines=winheight(0)*(50-a:percent)/100
