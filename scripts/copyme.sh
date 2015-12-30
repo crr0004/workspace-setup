@@ -10,6 +10,9 @@ then
 	cp ../.tmux.conf $1
 	cp ../.ctags $1
 	cp ../.ycm_extra_conf.py $1
+	curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	curl -fLo ~/.vim/colors/molokai.vim --create-dirs https://raw.githubusercontent.com/crr0004/molokai/master/colors/molokai.vim
+	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 else
 	echo "Must supply a directory to copy to. Suggest home directory of ~/"
 fi
