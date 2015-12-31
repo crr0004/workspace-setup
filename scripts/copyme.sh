@@ -7,6 +7,7 @@ then
 	cp ../.vimrc $1
 	cp dirtags $1
 	cp ../.gitconfig_global $1/.gitconfig
+	cp ../gitignore_global $1/.gitignore
 	cp ../.tmux.conf $1
 	cp ../.ctags $1
 	cp ../.ycm_extra_conf.py $1
