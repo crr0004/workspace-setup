@@ -15,6 +15,9 @@ then
 	curl -fLo ~/.vim/colors/molokai.vim --create-dirs https://raw.githubusercontent.com/crr0004/molokai/master/colors/molokai.vim
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 	sudo pip install powerline-status
+	if [[ -e "$(which dnf)" ]];
+	then
+		sudo dnf -y update && sudo dnf -y install vim-X11 tmux mpd ncmpcpp 
 else
 	echo "Must supply a directory to copy to. Suggest home directory of ~/"
 fi
