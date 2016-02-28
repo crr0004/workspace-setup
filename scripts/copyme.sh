@@ -6,7 +6,7 @@ then
 	sudo pip install powerline-status
 	if [[ -e "$(which dnf)" ]];
 	then
-		su -c 'dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm'
+		su -c 'dnf install -y http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm'
 		sudo dnf -y update && sudo dnf -y install vim-X11 tmux mpd ncmpcpp 
 	fi
 	cp ../.bashrc $1
