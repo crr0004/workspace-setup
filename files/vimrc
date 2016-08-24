@@ -1,18 +1,20 @@
 let mapleader = " "
 " Changes the color scheme to a pleasent scheme
 colorscheme molokai
-if !empty(glob("~/.vim/autoload/plug.vim"))
+let vimrc_home = expand('%:p:h')
+if !empty(vimrc_home . "/autoload/plug.vim")
 
 	call plug#begin('~/.vim/plugged')
 
-	Plug 'SirVer/ultisnips' " UtilSnips engine
+"	Plug 'SirVer/ultisnips' " UtilSnips engine
+	Plug 'Shougo/neosnippet-snippets'
+	Plug 'Shougo/neosnippet' "Snippet engine that doesn't use python
 	Plug 'honza/vim-snippets' " Code snippets
 	Plug 'Shougo/neocomplete.vim' | Plug 'Shougo/vimproc.vim', {'do': 'make'}
 	Plug 'tmux-plugins/vim-tmux'
 	Plug 'python-rope/ropevim', {'for': 'python'}
 	Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 	Plug 'scrooloose/syntastic'
-	Plug 'eiginn/netrw' " Ensures I have latest version of netrw 
 	Plug 'jeetsukumaran/vim-buffergator'
 	Plug 'kien/ctrlp.vim'
 	Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
@@ -24,15 +26,14 @@ if !empty(glob("~/.vim/autoload/plug.vim"))
 	let g:tagbar_compact = 1
 
 	let g:neocomplete#enable_at_startup = 1
-
-	let g:UltiSnipsExpandTrigger='<F9>'
-	let g:UltiSnipsJumpForwardTrigger="<c-b>"
-	let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 	let g:netrw_liststyle=0         " thin (change to 3 for tree)
 	let g:netrw_banner=0            " no banner
 	let g:netrw_altv=1              " open files on right
 	let g:netrw_preview=1           " open previews vertically
 	let g:netrw_browse_split = 4 " Open files in previous window
+
+	let g:neosnippet#enable_snipmate_compatibility = 1
+	let g:neosnippet#snippets_directory = "~/.vim/plugged/vim-snippets/snippets/"
 
 	let g:syntastic_cpp_checkers = ['gcc']
 
@@ -42,6 +43,13 @@ if !empty(glob("~/.vim/autoload/plug.vim"))
 	let g:buffergator_hsplit_size = 20
 	let g:buffergator_autoupdate = 1
 	let g:buffergator_viewport_split_policy = "n"
+
+	" neosnippet Plugin key-mappings.
+	imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+	smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+	xmap <C-k>     <Plug>(neosnippet_expand_target)
+	smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+				\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 
 else
@@ -104,7 +112,6 @@ endif
 	set backspace=indent,eol,start " Makes backspace actually work
 	set tags=./.tags,.tags
 	"Folding with syntax highlighting
-		set foldmethod=syntax
 		set foldnestmax=3
 		let javaScript_fold=1         " JavaScript
 		let perl_fold=1               " Perl
