@@ -38,6 +38,7 @@ if !empty(vimrc_home . "/autoload/plug.vim")
 	let g:syntastic_cpp_checkers = ['gcc']
 
 	let g:syntastic_cpp_check_header = 1
+	let g:syntastic_cpp_include_dirs = ['includes', 'headers', 'src/headers']
 
 	let g:buffergator_vsplit_size = 40
 	let g:buffergator_hsplit_size = 20
@@ -50,6 +51,31 @@ if !empty(vimrc_home . "/autoload/plug.vim")
 	xmap <C-k>     <Plug>(neosnippet_expand_target)
 	smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 				\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+	function! LoadCmakeIncludeDirs(...)
+		if !exists("g:LoadCMakeVariable_includeDirs")
+			let g:LoadCMakeVariable_includeDirs = 0
+		endif
+		if(a:0 >= 1)
+			let cmakeFile = a:1
+			if !filereadable(cmakeFile)
+				echo "Couldn't find " . cmakeFile
+			endif
+		else
+			let cmakeFile = fnamemodify('CMakeCache.txt', ':p')
+		endif
+
+		if filereadable(cmakeFile) && g:LoadCMakeVariable_includeDirs == 0
+			let bufferNumber = bufnr('%')
+			execute 'hide view ' . cmakeFile
+			let lineNumber = search("HEADER_DIRS_STRING:STRING=", "")
+			let headersLine = getline(".")
+			let includeDirs = split(substitute(headersLine, "HEADER_DIRS_STRING:STRING=", "", ""), ",")
+			let g:LoadCMakeVariable_includeDirs = 1
+			let g:syntastic_cpp_include_dirs = get(g:, 'syntastic_cpp_include_dirs','') + includeDirs
+			execute 'silent buffer ' . bufferNumber
+			execute 'silent bunload! ' . cmakeFile
+		endif
+	endfunction
 
 
 else
@@ -61,7 +87,7 @@ endif
 	" Swaps scroll commands for easier ergonimcs
 	nnoremap <C-f> :call ScrollDownPercent(33)<CR>
 	nnoremap <C-b> :call ScrollUpPercent(33)<CR>
-	" Moves down a split window
+	" Alters folds
 	nmap <Leader><Space> za
 	nmap <Leader><S-Space> zA
 	vmap <Leader><Space> zf
@@ -97,10 +123,12 @@ endif
 	" And load session with F11
 	noremap <F11> :source ./.vim_session
 	" Reload tag file with F3
-	noremap <F3> :!(cd %:p:h && ctags --language-force=C++ -R -f .tags)
+	noremap <F3> :!(cd %:p:h && ctags -R -f .tags)
 	map <F4> :lgrep -e " . expand("<cword>") . " "
 	map <F5> !~/dirtags % & <CR>
 " Options
+	" Stops saving of all the globals and options
+	set sessionoptions=help,blank,buffers,curdir,folds,tabpages,winsize,slash,unix
 	filetype plugin on " Turns plugin filetype detection on
 	filetype on " The command filetype plugin on turns filetype detection on, however to ensure it is turned on
 	set omnifunc=syntaxcomplete#Complete
@@ -112,6 +140,7 @@ endif
 	set backspace=indent,eol,start " Makes backspace actually work
 	set tags=./.tags,.tags
 	"Folding with syntax highlighting
+		set foldmethod=syntax
 		set foldnestmax=3
 		let javaScript_fold=1         " JavaScript
 		let perl_fold=1               " Perl
