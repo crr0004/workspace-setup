@@ -129,6 +129,8 @@ endif
 " Options
 	" Stops saving of all the globals and options
 	set sessionoptions=help,blank,buffers,curdir,folds,tabpages,winsize,slash,unix
+	" Set the minimum width for current window
+	set wiw=80
 	filetype plugin on " Turns plugin filetype detection on
 	filetype on " The command filetype plugin on turns filetype detection on, however to ensure it is turned on
 	set omnifunc=syntaxcomplete#Complete
