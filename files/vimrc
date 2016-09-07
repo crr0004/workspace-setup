@@ -10,14 +10,15 @@ if !empty(vimrc_home . "/autoload/plug.vim")
 	Plug 'Shougo/neosnippet-snippets'
 	Plug 'Shougo/neosnippet' "Snippet engine that doesn't use python
 	Plug 'honza/vim-snippets' " Code snippets
-	Plug 'Shougo/neocomplete.vim' | Plug 'Shougo/vimproc.vim', {'do': 'make'}
+	Plug 'Shougo/neocomplete.vim'
 	Plug 'tmux-plugins/vim-tmux'
 	Plug 'python-rope/ropevim', {'for': 'python'}
 	Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 	Plug 'scrooloose/syntastic'
-	Plug 'jeetsukumaran/vim-buffergator'
 	Plug 'kien/ctrlp.vim'
 	Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
+	Plug 'tpope/vim-vinegar'
+	Plug 'Konfekt/FastFold'
 
 
 	call plug#end()
@@ -26,11 +27,6 @@ if !empty(vimrc_home . "/autoload/plug.vim")
 	let g:tagbar_compact = 1
 
 	let g:neocomplete#enable_at_startup = 1
-	let g:netrw_liststyle=0         " thin (change to 3 for tree)
-	let g:netrw_banner=0            " no banner
-	let g:netrw_altv=1              " open files on right
-	let g:netrw_preview=1           " open previews vertically
-	let g:netrw_browse_split = 4 " Open files in previous window
 
 	let g:neosnippet#enable_snipmate_compatibility = 1
 	let g:neosnippet#snippets_directory = "~/.vim/plugged/vim-snippets/snippets/"
@@ -39,6 +35,7 @@ if !empty(vimrc_home . "/autoload/plug.vim")
 
 	let g:syntastic_cpp_check_header = 1
 	let g:syntastic_cpp_include_dirs = ['includes', 'headers', 'src/headers']
+	let g:LoadCMakeVariable_includeDirs=0
 
 	let g:buffergator_vsplit_size = 40
 	let g:buffergator_hsplit_size = 20
@@ -123,7 +120,7 @@ endif
 	" And load session with F11
 	noremap <F11> :source ./.vim_session
 	" Reload tag file with F3
-	noremap <F3> :!(cd %:p:h && ctags -R -f .tags)
+	noremap <F3> :!(cd %:p:h && ctags --c++-kinds=+p --fields=+iaS --extra=+ -R -f .tags)
 	map <F4> :lgrep -e " . expand("<cword>") . " "
 	map <F5> !~/dirtags % & <CR>
 " Options
