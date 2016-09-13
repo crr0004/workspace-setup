@@ -1,11 +1,14 @@
 let mapleader = " "
 " Changes the color scheme to a pleasent scheme
 colorscheme molokai
-if !empty(glob("~/.vim/autoload/plug.vim"))
+let vimrc_home = expand('%:p:h')
+if !empty(vimrc_home . "/autoload/plug.vim")
 
 	call plug#begin('~/.vim/plugged')
 
-	Plug 'SirVer/ultisnips' " UtilSnips engine
+"	Plug 'SirVer/ultisnips' " UtilSnips engine
+	Plug 'Shougo/neosnippet-snippets'
+	Plug 'Shougo/neosnippet' "Snippet engine that doesn't use python
 	Plug 'honza/vim-snippets' " Code snippets
 	Plug 'mrtazz/DoxygenToolkit.vim' "Doxygen utils
 	Plug 'Shougo/neocomplete.vim' | Plug 'Shougo/vimproc.vim', {'do': 'make'}
@@ -19,6 +22,9 @@ if !empty(glob("~/.vim/autoload/plug.vim"))
 	Plug 'kien/ctrlp.vim'
 "	Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
 	Plug 'justmao945/vim-clang'
+	Plug 'kien/ctrlp.vim'
+	Plug 'tpope/vim-vinegar'
+	"Plug 'vim-scripts/OmniCppComplete'
 
 	call plug#end()
 
@@ -38,6 +44,8 @@ if !empty(glob("~/.vim/autoload/plug.vim"))
 	let g:UltiSnipsExpandTrigger='<F9>'
 	let g:UltiSnipsJumpForwardTrigger="<c-b>"
 	let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+	let g:neosnippet#enable_snipmate_compatibility = 1
+	let g:neosnippet#snippets_directory = "~/.vim/plugged/vim-snippets/snippets/"
 
 	if exists('g:loaded_syntastic_plugin')
 
@@ -46,6 +54,7 @@ if !empty(glob("~/.vim/autoload/plug.vim"))
 		let g:syntastic_cpp_check_header = 1
 		let g:syntastic_cpp_include_dirs = [ 'includes', 'headers', 'src/headers' ]
 	endif
+	let g:LoadCMakeVariable_includeDirs=0
 
 	let g:buffergator_vsplit_size = 40
 	let g:buffergator_hsplit_size = 20
@@ -73,6 +82,39 @@ if !empty(glob("~/.vim/autoload/plug.vim"))
 \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
 
 	endif
+	" neosnippet Plugin key-mappings.
+	imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+	smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+	xmap <C-k>     <Plug>(neosnippet_expand_target)
+	smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+				\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+	set completeopt=menuone,menu,longest,preview
+	function! LoadCmakeIncludeDirs(...)
+		if !exists("g:LoadCMakeVariable_includeDirs")
+			let g:LoadCMakeVariable_includeDirs = 0
+		endif
+		if(a:0 >= 1)
+			let cmakeFile = a:1
+			if !filereadable(cmakeFile)
+				echo "Couldn't find " . cmakeFile
+			endif
+		else
+			let cmakeFile = fnamemodify('CMakeCache.txt', ':p')
+		endif
+
+		if filereadable(cmakeFile) && g:LoadCMakeVariable_includeDirs == 0
+			let bufferNumber = bufnr('%')
+			execute 'hide view ' . cmakeFile
+			let lineNumber = search("HEADER_DIRS_STRING:STRING=", "")
+			let headersLine = getline(".")
+			let includeDirs = split(substitute(headersLine, "HEADER_DIRS_STRING:STRING=", "", ""), ",")
+			let g:LoadCMakeVariable_includeDirs = 1
+			let g:syntastic_cpp_include_dirs = get(g:, 'syntastic_cpp_include_dirs','') + includeDirs
+			execute 'silent buffer ' . bufferNumber
+			execute 'silent bunload! ' . cmakeFile
+		endif
+	endfunction
+
 
 else
 	echom "Plugged not installed. Plugins not going to be loaded."
@@ -83,7 +125,7 @@ endif
 	" Swaps scroll commands for easier ergonimcs
 	nnoremap <C-f> :call ScrollDownPercent(33)<CR>
 	nnoremap <C-b> :call ScrollUpPercent(33)<CR>
-	" Moves down a split window
+	" Alters folds
 	nmap <Leader><Space> za
 	nmap <Leader><S-Space> zA
 	vmap <Leader><Space> zf
@@ -123,11 +165,14 @@ endif
 	map <F4> :lgrep -e " . expand("<cword>") . " "
 	map <F5> !~/dirtags % & <CR>
 " Options
+	" Stops saving of all the globals and options
+	set sessionoptions=help,blank,buffers,curdir,folds,tabpages,winsize,slash,unix
+	" Set the soft minimum width for current window
+	set wiw=80
 	filetype plugin on " Turns plugin filetype detection on
 	filetype on " The command filetype plugin on turns filetype detection on, however to ensure it is turned on
 	set omnifunc=syntaxcomplete#Complete
 	set completeopt=longest,menuone
-	
 	au BufRead *.rs set filetype=rust
 	autocmd CompleteDone * pclose
 	autocmd BufNewFile,BufRead *.md set filetype=markdown
@@ -135,7 +180,14 @@ endif
 	set nu " Sets line numbers on, change to rnu for relative line numbers
 	set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4 " Changes tab to 4 spaces
 	set backspace=indent,eol,start " Makes backspace actually work
-	set sessionoptions=help,blank,buffers,curdir,folds,tabpages,winsize,slash,unix
+	" Sets the word wrap to 80 without automatic linebreaks
+	set wrap
+	set linebreak
+	set nolist  " list disables linebreak
+	set textwidth=80
+	set formatoptions+=lt
+	" Looks at current file's directory. Then current working directory.
+	" Then searches up.
 	set tags=./.tags,.tags;
 	"Folding with syntax highlighting
 		set foldmethod=syntax
@@ -153,6 +205,9 @@ endif
 	"Modelines
 	set modeline
 	set modelines=5
+	" automatically open and close the popup menu / preview window
+	au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+	set completeopt=menuone,menu,longest,preview
 
 " Functions
 

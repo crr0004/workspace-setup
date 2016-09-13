@@ -3,7 +3,7 @@
 --exclude=doxygen*
 --exclude=.md
 --fields=+aiS
---extra=+q
---c++-kinds=+p
 --sort=yes 
 -f .tags
+--extra=+qf
+--c++-kinds=+p
