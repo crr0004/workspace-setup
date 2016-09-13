@@ -3,5 +3,8 @@
 [._]s[a-w][a-z]
 *.un~
 Session.vim
+*.vim_session
 .netrwhist
 *~
+*.tags
+*.tag

@@ -7,20 +7,30 @@ if !empty(glob("~/.vim/autoload/plug.vim"))
 
 	Plug 'SirVer/ultisnips' " UtilSnips engine
 	Plug 'honza/vim-snippets' " Code snippets
+	Plug 'mrtazz/DoxygenToolkit.vim' "Doxygen utils
 	Plug 'Shougo/neocomplete.vim' | Plug 'Shougo/vimproc.vim', {'do': 'make'}
 	Plug 'tmux-plugins/vim-tmux'
-	Plug 'python-rope/ropevim', {'for': 'python'}
+"	Plug 'python-rope/ropevim', {'for': 'python'}
 	Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-	Plug 'scrooloose/syntastic'
-	Plug 'eiginn/netrw' " Ensures I have latest version of netrw 
-	Plug 'jeetsukumaran/vim-buffergator'
+"	Plug 'scrooloose/syntastic'
+	Plug 'Konfekt/FastFold'
+"	Plug 'eiginn/netrw'
+"	Plug 'jeetsukumaran/vim-buffergator'
 	Plug 'kien/ctrlp.vim'
-	Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
-
+"	Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
+	Plug 'justmao945/vim-clang'
 
 	call plug#end()
 
-	nmap <F8> :TagbarToggle<CR> " Turns TagbarToggle on, check plugins for what this does
+	nmap <F8> :TagbarToggle<CR> " Turns TagbarToggllet g:DoxygenToolkit_briefTag_pre="@Synopsis  "
+
+	"Doxygen toolkit configuration
+	let g:DoxygenToolkit_paramTag_pre="@Param "
+	let g:DoxygenToolkit_returnTag="@Returns   "
+	let g:DoxygenToolkit_blockHeader="-------------------------------"
+	let g:DoxygenToolkit_blockFooter="---------------------------------"
+	let g:DoxygenToolkit_authorName="Christopher Rhodes"
+
 	let g:tagbar_compact = 1
 
 	let g:neocomplete#enable_at_startup = 1
@@ -28,21 +38,41 @@ if !empty(glob("~/.vim/autoload/plug.vim"))
 	let g:UltiSnipsExpandTrigger='<F9>'
 	let g:UltiSnipsJumpForwardTrigger="<c-b>"
 	let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-	let g:netrw_liststyle=0         " thin (change to 3 for tree)
-	let g:netrw_banner=0            " no banner
-	let g:netrw_altv=1              " open files on right
-	let g:netrw_preview=1           " open previews vertically
-	let g:netrw_browse_split = 4 " Open files in previous window
 
-	let g:syntastic_cpp_checkers = ['gcc']
+	if exists('g:loaded_syntastic_plugin')
 
-	let g:syntastic_cpp_check_header = 1
+		let g:syntastic_cpp_checkers = ['gcc']
+
+		let g:syntastic_cpp_check_header = 1
+		let g:syntastic_cpp_include_dirs = [ 'includes', 'headers', 'src/headers' ]
+	endif
 
 	let g:buffergator_vsplit_size = 40
 	let g:buffergator_hsplit_size = 20
 	let g:buffergator_autoupdate = 1
 	let g:buffergator_viewport_split_policy = "n"
 
+" disable auto completion for vim-clang
+	if exists('g:clang_loaded')
+        let g:clang_auto = 0
+		let g:clang_check_syntax_auto = 1
+        " default 'longest' can not work with neocomplete
+        let g:clang_c_completeopt = 'menuone,preview'
+        let g:clang_cpp_completeopt = 'menuone,preview'
+
+        " use neocomplete
+        " input patterns
+        if !exists('g:neocomplete#force_omni_input_patterns')
+          let g:neocomplete#force_omni_input_patterns = {}
+        endif
+
+        " for c and c++
+        let g:neocomplete#force_omni_input_patterns.c =
+              \ '[^.[:digit:] *\t]\%(\.\|->\)\w*'
+        let g:neocomplete#force_omni_input_patterns.cpp =
+\ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+
+	endif
 
 else
 	echom "Plugged not installed. Plugins not going to be loaded."
@@ -89,20 +119,24 @@ endif
 	" And load session with F11
 	noremap <F11> :source ./.vim_session
 	" Reload tag file with F3
-	noremap <F3> :!(cd %:p:h && ctags --language-force=C++ -R -f .tags)
+	noremap <F3> :!(cd %:p:h && ctags -R -f .tags)
 	map <F4> :lgrep -e " . expand("<cword>") . " "
 	map <F5> !~/dirtags % & <CR>
 " Options
 	filetype plugin on " Turns plugin filetype detection on
 	filetype on " The command filetype plugin on turns filetype detection on, however to ensure it is turned on
 	set omnifunc=syntaxcomplete#Complete
+	set completeopt=longest,menuone
+	
 	au BufRead *.rs set filetype=rust
+	autocmd CompleteDone * pclose
 	autocmd BufNewFile,BufRead *.md set filetype=markdown
 	autocmd BufNewFile,BufRead SConstruct set filetype=python
 	set nu " Sets line numbers on, change to rnu for relative line numbers
 	set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4 " Changes tab to 4 spaces
 	set backspace=indent,eol,start " Makes backspace actually work
-	set tags=./.tags,.tags
+	set sessionoptions=help,blank,buffers,curdir,folds,tabpages,winsize,slash,unix
+	set tags=./.tags,.tags;
 	"Folding with syntax highlighting
 		set foldmethod=syntax
 		set foldnestmax=3
