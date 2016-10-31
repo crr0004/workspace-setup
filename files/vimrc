@@ -164,6 +164,12 @@ endif
 	noremap <F3> :!(cd %:p:h && ctags -R -f .tags)
 	map <F4> :lgrep -e " . expand("<cword>") . " "
 	map <F5> !~/dirtags % & <CR>
+"Commands
+	au BufRead *.rs set filetype=rust
+	autocmd CompleteDone * pclose
+	autocmd BufNewFile,BufRead *.md set filetype=markdown
+	autocmd BufNewFile,BufRead SConstruct set filetype=python
+	command! -nargs=+ Silent execute 'silent <args>' | redraw!
 " Options
 	" Stops saving of all the globals and options
 	set sessionoptions=help,blank,buffers,curdir,folds,tabpages,winsize,slash,unix
@@ -173,10 +179,6 @@ endif
 	filetype on " The command filetype plugin on turns filetype detection on, however to ensure it is turned on
 	set omnifunc=syntaxcomplete#Complete
 	set completeopt=longest,menuone
-	au BufRead *.rs set filetype=rust
-	autocmd CompleteDone * pclose
-	autocmd BufNewFile,BufRead *.md set filetype=markdown
-	autocmd BufNewFile,BufRead SConstruct set filetype=python
 	set nu " Sets line numbers on, change to rnu for relative line numbers
 	set tabstop=4 softtabstop=0 noexpandtab shiftwidth=4 " Changes tab to 4 spaces
 	set backspace=indent,eol,start " Makes backspace actually work
