@@ -4,6 +4,7 @@ colorscheme molokai
 let vimrc_home = expand('%:p:h')
 if !empty(vimrc_home . "/autoload/plug.vim")
 
+	let g:clang_auto = 0
 	call plug#begin('~/.vim/plugged')
 
 "	Plug 'SirVer/ultisnips' " UtilSnips engine
@@ -25,6 +26,7 @@ if !empty(vimrc_home . "/autoload/plug.vim")
 	Plug 'kien/ctrlp.vim'
 	Plug 'tpope/vim-vinegar'
 	"Plug 'vim-scripts/OmniCppComplete'
+	Plug 'derekwyatt/vim-fswitch'
 
 	call plug#end()
 
@@ -63,7 +65,6 @@ if !empty(vimrc_home . "/autoload/plug.vim")
 
 " disable auto completion for vim-clang
 	if exists('g:clang_loaded')
-        let g:clang_auto = 0
 		let g:clang_check_syntax_auto = 1
         " default 'longest' can not work with neocomplete
         let g:clang_c_completeopt = 'menuone,preview'
@@ -175,7 +176,8 @@ endif
 	" Stops saving of all the globals and options
 	set sessionoptions=help,blank,buffers,curdir,folds,tabpages,winsize,slash,unix
 	" Set the soft minimum width for current window
-	set wiw=80
+	set winwidth=80
+	set winheight=28
 	filetype plugin on " Turns plugin filetype detection on
 	filetype on " The command filetype plugin on turns filetype detection on, however to ensure it is turned on
 	set omnifunc=syntaxcomplete#Complete
