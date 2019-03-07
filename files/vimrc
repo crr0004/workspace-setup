@@ -2,7 +2,7 @@ let mapleader = " "
 " Changes the color scheme to a pleasent scheme
 colorscheme molokai
 let vimrc_home = expand('%:p:h')
-if !empty(vimrc_home . "/autoload/plug.vim")
+if filereadable(vimrc_home . "/autoload/plug.vim")
 
 	let g:clang_auto = 0
 	call plug#begin('~/.vim/plugged')
