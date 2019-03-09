@@ -1,4 +1,3 @@
-
 #!/bin/bash
 #Copies relevant files to the correct locations
 #$1 should be dir to copy to
@@ -15,5 +14,5 @@ then
 	curl -fLo ~/.vim/colors/molokai.vim --create-dirs https://raw.githubusercontent.com/crr0004/molokai/master/colors/molokai.vim
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 else
-	echo "Must supply a directory to copy to. Suggest home directory of ~/"
+	echo "Must supply a directory to copy to. I Suggest home directory of ~/"
 fi
