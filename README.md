@@ -3,6 +3,13 @@ A place for my linux workspace files so I can always clone it into new developme
 
 Good color for warm gray background: #272822
 
+### How To Install
+1. `cd scripts`
+2. `./install.sh ~/` or `./install.ps1` for windows
+3. Provide sudo password as asked
+
+
+
 ### .bashrc ###
 Contains aliases and extensions for bash enviroment. Place in home directory where bashrc can find it
 ### dirtags ###
