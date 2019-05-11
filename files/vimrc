@@ -29,6 +29,7 @@ if filereadable(g:vimrc_home . "/.vim/autoload/plug.vim") ||
 	Plug 'tpope/vim-vinegar'
 	"Plug 'vim-scripts/OmniCppComplete'
 	Plug 'derekwyatt/vim-fswitch'
+	Plug 'jeetsukumaran/vim-buffergator'
 
 	call plug#end()
 

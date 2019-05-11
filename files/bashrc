@@ -73,5 +73,6 @@ export PATH=$PATH:$GOROOT/bin:"$JDK_HOME/bin":"~/dev/source/vim/install/bin:/usr
 export LD_LIBRARY_PATH=/usr/local/cuda-7.0/lib64:$LD_LIBRARY_PATH
 export WINEPREFX="/mnt/1TB/FED/.wine"
 export WINEARCH="wine32"
+export PROMPT_COMMAND='history -a;history -c;history -r'
 
 set -o vi #Sets the editor commands to vi mode
