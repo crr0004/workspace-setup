@@ -1,7 +1,7 @@
 let mapleader = " "
 " Changes the color scheme to a pleasent scheme
 colorscheme molokai
-let g:vimrc_home = expand('%:p:h')
+let g:vimrc_home = expand('~/')
 if filereadable(g:vimrc_home . "/.vim/autoload/plug.vim") ||
 \ filereadable(g:vimrc_home . "/autoload/plug.vim") ||
 \ filereadable("~/.vim/autoload/plug.vim")
