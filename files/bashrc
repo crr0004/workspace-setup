@@ -75,4 +75,15 @@ export WINEPREFX="/mnt/1TB/FED/.wine"
 export WINEARCH="wine32"
 export PROMPT_COMMAND='history -a;history -c;history -r'
 
+if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
+	GIT_PROMPT_ONLY_IN_REPO=1
+	source $HOME/.bash-git-prompt/gitprompt.sh
+fi
+if [ -f $(which clang) ]; then
+	export CC=$(which clang)
+fi
+if [ -f $(which clang++) ]; then
+	export CXX=$(which clang++)
+fi
+
 set -o vi #Sets the editor commands to vi mode
