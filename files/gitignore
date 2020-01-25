@@ -10,3 +10,5 @@ Session.vim
 *.tag
 *.tar.gz
 *.vscode
+venv
+lvenv
