@@ -87,3 +87,5 @@ if [ -f $(which clang++) ]; then
 fi
 
 set -o vi #Sets the editor commands to vi mode
+
+complete -C /home/chris/dev/f/dev/deepracer/mc mc
